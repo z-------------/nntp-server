@@ -57,3 +57,7 @@ body {
 .list p {
     margin: 5px 0;
 }
+
+.list p .last-sender {
+    color: rgba(255, 255, 255, .8);
+}

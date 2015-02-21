@@ -16,10 +16,12 @@ var main = function(){
 
                 var contentString = "";
                 var lastMessage = datum.comments.data[datum.comments.data.length - 1];
+                var lastSenderName = lastMessage.from.name.split(" ")[0];
+                if (lastMessage.from.id === USER_ID) lastSenderName = "you";
                 if (lastMessage.message) {
-                    contentString = lastMessage.from.name + ": " + lastMessage.message;
+                    contentString = "<span class='last-sender'>" + lastSenderName + "</span>: " + lastMessage.message;
                 } else {
-                    contentString = lastMessage.from.name + " sent a file";
+                    contentString = "<span class='last-sender'>" + lastSenderName + "</span> sent a file";
                 }
 
                 var membersArray = [];
@@ -34,7 +36,7 @@ var main = function(){
                 if (idsArray.length === 1) {
                     FB.api(idsArray[0] + "/picture", function(r){
                         var newSrc = r.data.url;
-                        document.querySelector(".list-item[data-chat-id='" + chatID + "'] .item-img img").src = newSrc;
+                        document.querySelector(".list-item[data-item-id='" + chatID + "'] .item-img img").src = newSrc;
                     });
                 }
 

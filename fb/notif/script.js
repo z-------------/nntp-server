@@ -12,8 +12,14 @@ var main = function(){
             var imgSrc = "//placehold.it/50x50";
             var titleString = datum.from.name;
             var contentString = datum.title;
+            var notifID = datum.id;
+            
+            FB.api(datum.from.id + "/picture", function(r){
+                var newSrc = r.data.url;
+                document.querySelector(".list-item[data-item-id='" + notifID + "'] .item-img img").src = newSrc;
+            });
 
-            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString));
+            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString, notifID));
         });
     });
 };
