@@ -1,7 +1,57 @@
+*, :before, :after {
+    box-sizing: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    background-color: #555;
+    color: #FFF;
+    overflow-x: hidden;
+}
+
 .login-btn {
     display: none;
 }
 
 .login-btn.visible {
     display: block;
+}
+
+.list {
+    padding: 10px 0;
+}
+
+.list .list-item {
+    display: flex;
+    padding: 10px;
+}
+
+.list .item-img {
+    width: 55px;
+    flex-shrink: 0;
+    margin: 0 10px;
+}
+
+.list img {
+    border-radius: 50%;
+}
+
+.list h3 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+.list date {
+    color: rgba(255, 255, 255, .5);
+    font-size: .9em;
+}
+
+.list p {
+    margin: 5px 0;
 }

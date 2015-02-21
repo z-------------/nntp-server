@@ -1,3 +1,5 @@
+var USER_ID;
+
 var $loginBtn = $(".login-btn");
 var loginBtn = document.querySelectorAll(".login-btn")[0];
 
@@ -11,6 +13,7 @@ function statusChangeCallback(response) {
     console.log(response);
     if (response.status === "connected") {
         main();
+        USER_ID = response.authResponse.userID;
         loginBtn.classList.remove("visible");
     } else if (response.status === "not_authorized") {
         console.log("please log in with fb");
