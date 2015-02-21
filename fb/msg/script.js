@@ -1,7 +1,6 @@
 var main = function(){
     console.log("we're in!");
     
-    var $msgsList = $(".list");
     var msgsList = document.querySelectorAll(".list")[0];
     
     FB.api("me/inbox", function(r){
@@ -9,7 +8,9 @@ var main = function(){
 
         r.data.forEach(function(datum){
             if (datum.comments) {
-                var dateString = new Date(datum.updated_time).toLocaleTimeString();
+                var hrtime = new HRTime(new Date(datum.updated_time));
+                var dateString = hrtime.time + " " + hrtime.unit + "s ago";
+                
                 var imgSrc = "//placehold.it/50x50";
                 
                 var chatID = datum.id;
