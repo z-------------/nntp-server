@@ -14,13 +14,14 @@ var main = function(){
             var titleString = datum.from.name;
             var contentString = datum.title;
             var notifID = datum.id;
+            var url = datum.link;
             
             FB.api(datum.from.id + "/picture", function(r){
                 var newSrc = r.data.url;
                 document.querySelector(".list-item[data-item-id='" + notifID + "'] .item-img img").src = newSrc;
             });
 
-            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString, notifID));
+            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString, notifID, url));
         });
     });
 };
