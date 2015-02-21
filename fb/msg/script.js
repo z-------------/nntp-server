@@ -1,3 +1,5 @@
+var FB_MESSAGES_URL = "http://www.facebook.com/messages";
+
 var main = function(){
     console.log("we're in!");
     
@@ -10,9 +12,8 @@ var main = function(){
             if (datum.comments) {
                 var hrtime = new HRTime(new Date(datum.updated_time));
                 var dateString = hrtime.time + " " + hrtime.unit + "s ago";
-                
                 var imgSrc = "//placehold.it/50x50";
-                
+                var chatURL = FB_MESSAGES_URL;
                 var chatID = datum.id;
 
                 var contentString = "";
@@ -34,14 +35,16 @@ var main = function(){
                     }
                 });
                 
-                if (idsArray.length === 1) {
+                if (idsArray.length === 1) { // individual chat
                     FB.api(idsArray[0] + "/picture", function(r){
                         var newSrc = r.data.url;
                         document.querySelector(".list-item[data-item-id='" + chatID + "'] .item-img img").src = newSrc;
                     });
+                } else { // group chat
+                    chatURL = "http://www.facebook.com/messages/conversation-" + chatID;
                 }
 
-                msgsList.appendChild(makeListItem(membersArray.join(", "), contentString, imgSrc, dateString, chatID));
+                msgsList.appendChild(makeListItem(membersArray.join(", "), contentString, imgSrc, dateString, chatID, chatURL));
             }
         });
     });
