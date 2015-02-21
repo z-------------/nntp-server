@@ -1,0 +1,7 @@
+.login-btn {
+    display: none;
+}
+
+.login-btn.visible {
+    display: block;
+}
