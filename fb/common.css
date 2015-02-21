@@ -14,6 +14,7 @@ body {
     background-color: #555;
     color: #FFF;
     overflow-x: hidden;
+    font-size: 15px;
 }
 
 .login-btn {
