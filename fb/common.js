@@ -1,10 +1,14 @@
-var makeListItem = function(title, content, img, date, id, url){
+var makeListItem = function(title, content, img, date, id, url, openNewTab){
     var elem = document.createElement("li");
     elem.classList.add("list-item");
     elem.dataset.itemId = id;
     elem.innerHTML = "<div class='item-img'><img src='" + img + "'></div><div class='item-content'><h3>" + title + "</h3><p>" + content + "</p><date>" + date + "</date></div>";
     elem.addEventListener("click", function(){
-        window.open(url);
+        if (openNewTab === true) {
+            window.open(url);
+        } else {
+            window.location = url;
+        }
     });
     return elem;
 };

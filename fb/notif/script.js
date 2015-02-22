@@ -21,7 +21,7 @@ var main = function(){
                 document.querySelector(".list-item[data-item-id='" + notifID + "'] .item-img img").src = newSrc;
             });
 
-            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString, notifID, url));
+            msgsList.appendChild(makeListItem(titleString, contentString, imgSrc, dateString, notifID, url, true));
         });
     });
 };
