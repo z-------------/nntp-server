@@ -1,4 +1,4 @@
-var FB_MESSAGE_URL = "http://m.facebook.com/messages/thread/";
+var FB_MESSAGES_URL = "http://www.facebook.com/messages";
 
 var main = function(){
     console.log("we're in!");
@@ -13,8 +13,8 @@ var main = function(){
                 var hrtime = new HRTime(new Date(datum.updated_time));
                 var dateString = hrtime.time + " " + hrtime.unit + "s ago";
                 var imgSrc = "//placehold.it/50x50";
+                var chatURL = FB_MESSAGES_URL;
                 var chatID = datum.id;
-                var chatURL = FB_MESSAGE_URL + chatID;
 
                 var contentString = "";
                 var lastMessage = datum.comments.data[datum.comments.data.length - 1];
@@ -40,6 +40,8 @@ var main = function(){
                         var newSrc = r.data.url;
                         document.querySelector(".list-item[data-item-id='" + chatID + "'] .item-img img").src = newSrc;
                     });
+                } else { // group chat
+                    chatURL = "http://www.facebook.com/messages/conversation-" + chatID;
                 }
 
                 msgsList.appendChild(makeListItem(membersArray.join(", "), contentString, imgSrc, dateString, chatID, chatURL));
