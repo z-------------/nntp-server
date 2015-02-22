@@ -15,9 +15,10 @@ var main = function(){
                 var imgSrc = "//placehold.it/50x50";
                 var chatURL = FB_MESSAGES_URL;
                 var chatID = datum.id;
+                var messages = datum.comments.data;
 
                 var contentString = "";
-                var lastMessage = datum.comments.data[datum.comments.data.length - 1];
+                var lastMessage = messages[messages.length - 1];
                 var lastSenderName = lastMessage.from.name.split(" ")[0];
                 if (lastMessage.from.id === USER_ID) lastSenderName = "you";
                 if (lastMessage.message) {
@@ -25,15 +26,29 @@ var main = function(){
                 } else {
                     contentString = "<span class='last-sender'>" + lastSenderName + "</span> sent a file";
                 }
-
-                var membersArray = [];
+                
                 var idsArray = [];
                 datum.to.data.forEach(function(toNode){
                     if (toNode.id !== USER_ID) {
-                        membersArray.push(toNode.name);
                         idsArray.push(toNode.id);
                     }
                 });
+                
+                var membersArray = [];
+                messages.reverse().forEach(function(message){
+                    var id = message.from.id;
+                    var name = message.from.name;
+                    if (membersArray.indexOf(name) === -1 && id !== USER_ID && idsArray.indexOf(id) !== -1) {
+                        membersArray.push(name);
+                    }
+                });
+                
+                var membersString = membersArray.join("");
+                if (membersArray.length === (datum.to.data.length - 1)) {
+                    membersString = membersArray.join(", ");
+                } else if (membersArray.length > 1 || idsArray.length > 1) {
+                    membersString = membersArray.join(", ") + " and " + (datum.to.data.length - 1 - membersArray.length) + " others";
+                }
                 
                 if (idsArray.length === 1) { // individual chat
                     FB.api(idsArray[0] + "/picture", function(r){
@@ -44,7 +59,7 @@ var main = function(){
                     chatURL = "http://www.facebook.com/messages/conversation-" + chatID;
                 }
 
-                msgsList.appendChild(makeListItem(membersArray.join(", "), contentString, imgSrc, dateString, chatID, chatURL));
+                msgsList.appendChild(makeListItem(membersString, contentString, imgSrc, dateString, chatID, chatURL));
             }
         });
     });
