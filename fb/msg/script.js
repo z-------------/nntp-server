@@ -12,7 +12,7 @@ var main = function(){
             if (datum.comments) {
                 var hrtime = new HRTime(new Date(datum.updated_time));
                 var dateString = hrtime.time + " " + hrtime.unit + "s ago";
-                var imgSrc = "//placehold.it/50x50";
+                var imgSrc = "/img/person.svg";
                 var chatURL = FB_MESSAGES_URL;
                 var chatID = datum.id;
                 var messages = datum.comments.data;
@@ -57,6 +57,7 @@ var main = function(){
                     });
                 } else { // group chat
                     chatURL = "http://www.facebook.com/messages/conversation-" + chatID;
+                    imgSrc = "/img/people.svg";
                 }
 
                 msgsList.appendChild(makeListItem(membersString, contentString, imgSrc, dateString, chatID, chatURL));
