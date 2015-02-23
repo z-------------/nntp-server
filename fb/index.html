@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="//connect.facebook.net/en_US/sdk.js"></script>
+        <script src="common.js"></script>
+        <script>
+            function main() {
+                console.log("logged in.");
+            }
+        </script>
+    </head>
+    <body>
+        <fb:login-button scope="read_mailbox,manage_notifications" onlogin="checkLoginState();"></fb:login-button>
+    </body>
+</html>

@@ -14,40 +14,31 @@ var USER_ID;
 FB.init({
     appId: "943767175668482",
     cookie: true,
+    xfbml: true,
     version: "v2.2"
 });
 
-document.addEventListener("DOMContentLoaded", function(){
-    var loginBtn = document.querySelectorAll(".login-btn")[0];
-
-    function statusChangeCallback(response) {
-        console.log(response);
-        if (response.status === "connected") {
-            main();
-            USER_ID = response.authResponse.userID;
-            loginBtn.classList.remove("visible");
-        } else if (response.status === "not_authorized") {
-            console.log("please log in with fb");
-            loginBtn.classList.add("visible");
-        } else {
-            console.log("please log in to fb");
-            loginBtn.classList.add("visible");
-        }
+function statusChangeCallback(response) {
+    console.log(response);
+    if (response.status === "connected") {
+        main();
+        USER_ID = response.authResponse.userID;
+        document.body.classList.remove("not-authed");
+    } else if (response.status === "not_authorized") {
+        console.log("please log in with fb");
+        document.body.classList.add("not-authed");
+    } else {
+        console.log("please log in to fb");
+        document.body.classList.add("not-authed");
     }
+}
 
-    function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-    }
-
+function checkLoginState() {
     FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
     });
+}
 
-    loginBtn.addEventListener("click", function(){
-        FB.login(checkLoginState, {
-            scope: "read_mailbox,manage_notifications"
-        });
-    });
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
 });
