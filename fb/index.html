@@ -2,15 +2,60 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script src="//connect.facebook.net/en_US/sdk.js"></script>
-        <script src="common.js"></script>
+        <link rel="import" href="common.html">
         <script>
-            function main() {
-                console.log("logged in.");
-            }
+            var main = function(){
+                console.log("logged in");
+                FB.api("me", {fields: "picture,name"}, function(r){
+                    var name = r.name;
+                    var pictureURL = r.picture.data.url;
+                    
+                    document.querySelector("#status p").innerHTML = "Logged in as <span>" + name + "</span>";
+                    document.querySelector("#status img").src = pictureURL;
+                    
+                    document.querySelector("fb\\:login-button").style.display = "none";
+                });
+            };
         </script>
+        <style>
+            body {
+                overflow: hidden;
+                background-color: transparent;
+                padding: 5px;
+                margin: 0;
+                color: rgba(255, 255, 255, .7);
+                font-size: 13px;
+            }
+            
+            body:before {
+                content: none !important;
+            }
+            
+            #status > * {
+                vertical-align: middle;
+            }
+            
+            #status p {
+                margin: 0;
+                display: inline-block;
+            }
+            
+            #status p span {
+                font-weight: 700;
+            }
+            
+            #status img {
+                border-radius: 50%;
+                width: 25px;
+                margin-right: 10px;
+            }
+        </style>
     </head>
     <body>
         <fb:login-button scope="read_mailbox,manage_notifications" onlogin="checkLoginState();"></fb:login-button>
+        <div id="status">
+            <img>
+            <p></p>
+        </div>
     </body>
 </html>

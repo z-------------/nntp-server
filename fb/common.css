@@ -17,6 +17,10 @@ body {
     font-size: 15px;
 }
 
+body.not-authed:before {
+    content: "Please log in to Facebook in options.";
+}
+
 .login-btn {
     display: none;
 }
