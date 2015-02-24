@@ -16,6 +16,6 @@ $ipApiURL = "http://gd.geobytes.com/GetCityDetails?fqcn=" . $ip;
 $ipAPIResponse = file_get_contents($ipApiURL);
 $ipAPIData = json_decode($ipAPIResponse);
 
-print($ipAPIData["geobyteslatitude"] . ", " . $ipAPIData["geobyteslongitude"]);
+var_dump($ipAPIData);
 
 ?>
