@@ -17,6 +17,6 @@ $wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxUQLQue
 $wxAPIResponse = file_get_contents($wxAPIURL);
 $wxAPIData = json_decode($wxAPIResponse, TRUE);
 
-var_dump($wxAPIData);
+var_dump($wxAPIURL);
 
 ?>
