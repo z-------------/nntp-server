@@ -14,8 +14,8 @@ $apiURL = "https://api.forecast.io/forecast/" . $API_KEY . "/";
 $ipApiURL = "http://gd.geobytes.com/GetCityDetails?fqcn=" . $ip;
 
 $ipAPIResponse = file_get_contents($ipApiURL);
-$ipAPIData = json_decode($ipAPIResponse);
+$ipAPIData = json_decode($ipAPIResponse, TRUE);
 
-var_dump($ipAPIData);
+print($ipAPIData["geobyteslatitude"] . "," $ipAPIData["geobyteslongitude"]);
 
 ?>
