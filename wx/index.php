@@ -12,8 +12,8 @@ $ipAPIResponse = file_get_contents($ipAPIURL);
 $ipAPIData = json_decode($ipAPIResponse, TRUE);
 $latLngStr = $ipAPIData["geobyteslatitude"] . "," . $ipAPIData["geobyteslongitude"];
 
-$wxYQLQuery = "set api_key='2319d1510ebae6b2d61d69ec6dc6ac14' on flickr.places; select * from weather.woeid where w in (select place.woeid from flickr.places(1) where (lat,lon) in (22.283001,114.150002)) and u='c'";
-$wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxUQLQuery) . "&format=json";
+$wxYQLQuery = "set api_key='2319d1510ebae6b2d61d69ec6dc6ac14' on flickr.places; select * from weather.woeid where w in (select place.woeid from flickr.places(1) where (lat,lon) in (" . $latLngStr . ")) and u='c'";
+$wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxYQLQuery) . "&format=json";
 $wxAPIResponse = file_get_contents($wxAPIURL);
 $wxAPIData = json_decode($wxAPIResponse, TRUE);
 
