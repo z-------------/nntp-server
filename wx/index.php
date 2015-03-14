@@ -7,6 +7,11 @@ if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
     $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
 }
 
+if (strrpos($ip, ",") !== FALSE) {
+    $explodedIP = explode(",", $ip);
+    $ip = $explodedIP[0];
+}
+
 $ipAPIURL = "http://ipinfo.io/" . $ip . "/geo";
 $ipAPIResponse = file_get_contents($ipAPIURL);
 $ipAPIData = json_decode($ipAPIResponse, TRUE);
