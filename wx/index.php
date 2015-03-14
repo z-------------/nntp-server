@@ -17,7 +17,7 @@ $ipAPIResponse = file_get_contents($ipAPIURL);
 $ipAPIData = json_decode($ipAPIResponse, TRUE);
 $latLngStr = $ipAPIData["loc"];
 
-$wxYQLQuery = "select condition from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text='" . $latLngStr . "' and gflags='R')";
+$wxYQLQuery = "select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text='" . $latLngStr . "' and gflags='R')";
 $wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxYQLQuery) . "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 $wxAPIResponse = file_get_contents($wxAPIURL);
 
