@@ -1,6 +1,13 @@
 <?php
 
-$ipAPIURL = "http://ipinfo.io/geo";
+$ip = $_SERVER["REMOTE_ADDR"];
+if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+    $ip = $_SERVER["HTTP_CLIENT_IP"];
+} elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+    $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+}
+
+$ipAPIURL = "http://ipinfo.io/" . $ip . "/geo";
 $ipAPIResponse = file_get_contents($ipAPIURL);
 $ipAPIData = json_decode($ipAPIResponse, TRUE);
 $latLngStr = $ipAPIData["loc"];
