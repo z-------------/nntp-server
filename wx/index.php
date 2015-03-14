@@ -17,6 +17,6 @@ $wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxYQLQue
 $wxAPIResponse = file_get_contents($wxAPIURL);
 
 header("Content-Type: application/json;charset=utf-8");
-print($wxAPIResponse);
+print($ip . $wxAPIResponse);
 
 ?>
