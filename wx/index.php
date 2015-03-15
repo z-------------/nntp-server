@@ -1,8 +1,14 @@
 <?php
 
+$usedGet = array(
+    ip => FALSE,
+    coords => FALSE
+);
+
 $ip = $_SERVER["REMOTE_ADDR"];
 if (!empty($_GET["ip"])) {
     $ip = $_GET["ip"];
+    $usedGet["ip"] = TRUE;
 } elseif (!empty($_SERVER["HTTP_CLIENT_IP"])) {
     $ip = $_SERVER["HTTP_CLIENT_IP"];
 } elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
@@ -14,10 +20,15 @@ if (strrpos($ip, ",") !== FALSE) {
     $ip = $explodedIP[0];
 }
 
-$ipAPIURL = "http://ipinfo.io/" . $ip . "/geo";
-$ipAPIResponse = file_get_contents($ipAPIURL);
-$ipAPIData = json_decode($ipAPIResponse, TRUE);
-$latLngStr = $ipAPIData["loc"];
+if (!empty($_GET["coords"])) {
+    $latLngStr = $_GET["coords"];
+    $usedGet["coords"] = TRUE;
+} else {
+    $ipAPIURL = "http://ipinfo.io/" . $ip . "/geo";
+    $ipAPIResponse = file_get_contents($ipAPIURL);
+    $ipAPIData = json_decode($ipAPIResponse, TRUE);
+    $latLngStr = $ipAPIData["loc"];
+}
 
 $wxYQLQuery = "SELECT item FROM weather.forecast WHERE woeid IN (SELECT woeid FROM geo.placefinder WHERE text='" . $latLngStr . "' AND gflags='R')";
 $wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxYQLQuery) . "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
@@ -29,7 +40,8 @@ $response->debug = array(
     "yql_query" => $wxYQLQuery,
     "yql_query_url" => $wxAPIURL,
     "ipinfo_url" => $ipAPIURL,
-    "coords" => explode(",", $latLngStr)
+    "coords" => explode(",", $latLngStr),
+    "used_get_parameter" => $usedGet
 );
 
 $response = json_encode($response, JSON_PRETTY_PRINT);
