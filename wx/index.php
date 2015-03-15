@@ -46,6 +46,7 @@ $response->debug = array(
     "coords" => explode(",", $latLngStr),
     "used_get_parameter" => $usedGet
 );
+ksort($response->debug);
 
 $response = json_encode($response, JSON_PRETTY_PRINT);
 
