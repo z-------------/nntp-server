@@ -27,7 +27,9 @@ $response = json_decode($wxAPIResponse);
 $response->debug = array(
     "ip" => $ip,
     "yql_query" => $wxYQLQuery,
-    "ipinfo_url" => $ipAPIURL
+    "yql_query_url" => $wxAPIURL,
+    "ipinfo_url" => $ipAPIURL,
+    "coords" => explode(",", $latLngStr)
 );
 
 $response = json_encode($response, JSON_PRETTY_PRINT);
