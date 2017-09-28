@@ -1,5 +1,7 @@
 <?php
 
+$DEEPSKY_API_KEY = "cee3b9273198893fd753d6ad01863145";
+
 $usedGet = array(
     ip => FALSE,
     coords => FALSE
@@ -8,7 +10,7 @@ $usedGet = array(
 $ip = $_SERVER["REMOTE_ADDR"];
 if (!empty($_GET["ip"])) {
     $ip = $_GET["ip"];
-    
+
     $usedGet["ip"] = TRUE;
 } elseif (!empty($_SERVER["HTTP_CLIENT_IP"])) {
     $ip = $_SERVER["HTTP_CLIENT_IP"];
@@ -23,7 +25,7 @@ if (strrpos($ip, ",") !== FALSE) {
 
 if (!empty($_GET["coords"])) {
     $latLngStr = $_GET["coords"];
-    
+
     $usedGet["coords"] = TRUE;
     $usedGet["ip"] = NULL;
 } else {
@@ -33,15 +35,14 @@ if (!empty($_GET["coords"])) {
     $latLngStr = $ipAPIData["loc"];
 }
 
-$wxYQLQuery = "SELECT item.condition,location FROM weather.forecast WHERE woeid IN (SELECT woeid FROM geo.placefinder WHERE text='" . $latLngStr . "' AND gflags='R')";
-$wxAPIURL = "https://query.yahooapis.com/v1/public/yql?q=" . urlencode($wxYQLQuery) . "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+$wxAPIURL = "https://api.forecast.io/forecast/" . $DEEPSKY_API_KEY . "/" . $latLngStr . "?units=si&exclude=daily,hourly";
 $wxAPIResponse = file_get_contents($wxAPIURL);
 
-$response = json_decode($wxAPIResponse);
+$response = new stdClass();
+$response->weather = json_decode($wxAPIResponse);
 $response->debug = array(
     "ip" => $ip,
-    "yql_query" => $wxYQLQuery,
-    "yql_query_url" => $wxAPIURL,
+    "deepsky_url" => $wxAPIURL,
     "ipinfo_url" => $ipAPIURL,
     "coords" => explode(",", $latLngStr),
     "used_get_parameter" => $usedGet
