@@ -41,7 +41,7 @@ if (!empty($_GET["lang"])) {
     $lang = "en";
 }
 
-$wxAPIURL = "https://api.forecast.io/forecast/" . $DEEPSKY_API_KEY . "/" . $latLngStr . "?units=si&exclude=daily,hourly&lang=" . $lang;
+$wxAPIURL = "https://api.darksky.net/forecast/" . $DEEPSKY_API_KEY . "/" . $latLngStr . "?units=si&exclude=daily,hourly&lang=" . $lang;
 $wxAPIResponse = file_get_contents($wxAPIURL);
 
 $response = new stdClass();
