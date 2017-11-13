@@ -35,7 +35,13 @@ if (!empty($_GET["coords"])) {
     $latLngStr = $ipAPIData["loc"];
 }
 
-$wxAPIURL = "https://api.forecast.io/forecast/" . $DEEPSKY_API_KEY . "/" . $latLngStr . "?units=si&exclude=daily,hourly";
+if (!empty($_GET["lang"])) {
+    $lang = $_GET["lang"];
+} else {
+    $lang = "en";
+}
+
+$wxAPIURL = "https://api.forecast.io/forecast/" . $DEEPSKY_API_KEY . "/" . $latLngStr . "?units=si&exclude=daily,hourly&lang=" . $lang;
 $wxAPIResponse = file_get_contents($wxAPIURL);
 
 $response = new stdClass();
