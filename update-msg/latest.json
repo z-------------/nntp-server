@@ -1,5 +1,6 @@
 {
   "title": "Important message about a future update",
   "type": "warning",
-  "time": 1508744595880
+  "time": 1508744595880,
+  "max_version": "4.8.0"
 }
